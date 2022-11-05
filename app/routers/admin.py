@@ -7,7 +7,7 @@ router = APIRouter(tags=["Admins"])
 
 @router.post("/resolveComplaint", status_code=status.HTTP_201_CREATED,
              response_model=schemas.Complain)
-def resolve_complain(
+async def resolve_complain(
         complain: schemas.Resolved,
         db: Session = Depends(database.get_db),
         user: int = Depends(oauth2.get_current_user)
@@ -29,8 +29,8 @@ def resolve_complain(
 
 
 @router.get("/getAllComplaintsForAdmin", response_model=list[schemas.AllComplain])
-def get_all_complains(db: Session = Depends(database.get_db),
-                      user: int = Depends(oauth2.get_current_user)):
+async def get_all_complains(db: Session = Depends(database.get_db),
+                            user: int = Depends(oauth2.get_current_user)):
     is_admin = user.role == "admin"
     print(is_admin)
     if not is_admin:

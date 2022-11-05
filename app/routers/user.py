@@ -26,7 +26,7 @@ async def create_user(user: schemas.CreateUser,
 
 @router.post("/submitComplaint", status_code=status.HTTP_201_CREATED,
              response_model=schemas.Complain)
-def user_complain(
+async def user_complain(
         usr_complain: schemas.PostComplain,
         db: Session = Depends(database.get_db),
         user: int = Depends(oauth2.get_current_user)
